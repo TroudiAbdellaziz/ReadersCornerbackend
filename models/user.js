@@ -2,21 +2,17 @@
 const mongoose = require('mongoose');
 
 //Define BucketlistSchema with title, description and category
-const BookSchema = mongoose.Schema({
-    title: {
+const UserSchema = mongoose.Schema({
+    firstName: {
         type: String,
         required: true
     },
-    description: String,
-    picture: String,
-    price: Number,
-    nbSales: Number,
-    soldOut: Boolean,
-    author: String,
-    languages: {
-    }
+    LastName: String,
+    email: String,
+    orders: [String],
+    password: String
 });
-const Book = module.exports = mongoose.model('Book', BookSchema );
+const  User = module.exports = mongoose.model(' User',  UserSchema );
 
 //BucketList.find() returns all the lists
 module.exports.getAllBooks = (callback) => {

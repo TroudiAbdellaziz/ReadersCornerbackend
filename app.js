@@ -29,7 +29,7 @@ app.listen(port, () => {
 const config = require('./config/database');
 mongoose.connect(config.database);
 
-const routes = require('./routes/route');
-
-//Routing all HTTP requests to /bucketlist to bucketlist controller
-app.use('/books',routes);
+const BookRouter = require('./routes/route');
+const UserRouter = require('./routes/UserRouter');
+app.use('/books',BookRouter);
+app.use('/user',UserRouter);
