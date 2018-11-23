@@ -26,7 +26,7 @@ router.post('/login', (req, res) => {
         }, (err, user) => {
         if (err) {
             console.log(err);
-            res.json({ success: false, message: `Failed to login. Error: ${err}` });
+            res.json({ success: false, message: `Technical error.` });
 
         }
         else if(!user) {

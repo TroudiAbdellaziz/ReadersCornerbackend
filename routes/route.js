@@ -17,6 +17,21 @@ router.get('/getBooks', (req, res) => {
     });
 });
 
+router.get('/getBookById/:id', (req, res) => {
+    console.log("here");
+    var id = req.params.id;
+    Book.findById(id,(err, book) => {
+        if (err) {
+            res.json({ success: false, message: `Failed to load book. Error: ${err}` });
+        }
+        else {
+            console.log(book);
+            res.write(JSON.stringify({ success: true, book: book }, null, 2));
+            res.end();
+        }
+    });
+});
+
 //GET HTTP method to /bucketlist
 router.get('/', (req, res) => {
     res.send("GET");
