@@ -22,43 +22,61 @@ router.post('/login', (req, res) => {
     console.log(req.body);
     User.findOne(
         {
-          email: req.body.email
+            email: req.body.email
         }, (err, user) => {
+            if (err) {
+                console.log(err);
+                res.json({ success: false, message: `Technical error.` });
+
+            }
+            else if (!user) {
+                console.log("not found");
+                res.json({ success: false, message: 'user not found' });
+            }
+            else {
+                if (user.password != req.body.password) {
+                    res.json({ success: false, message: 'wrong password' });
+                } else {
+                    res.json({ success: true, user: user });
+                }
+            }
+
+        });
+
+});
+router.post('/checkPassAndChange', (req, res) => {
+    User.findOne({ password: req.body.password }, { id: req.body.id }, (err, user) => {
         if (err) {
             console.log(err);
-            res.json({ success: false, message: `Technical error.` });
+            res.json({ status: false, message: `Failed to check password. Error: ${err}` });
 
         }
-        else if(!user) {
-            console.log("not found");
-            res.json({ success: false , message: 'user not found'});
-        }
+
         else {
-            if (user.password!=req.body.password){
-                res.json({ success: false , message: 'wrong password'});
-            } else {
-                res.json({ success: true , user: user});
-            }
+            console.log("done");
+            user.password = req.body.newpassword;
+            user.save();
+            res.json({ status: true });
+
         }
 
     });
-
 });
 router.post('/signup', (req, res) => {
     console.log(req.body);
-    let user= {firstName:req.body.fname,lasname:req.body.lname,password:req.body.password,email:req.body.email}
+    let user = { firstName: req.body.fname, lasname: req.body.lname, password: req.body.password, email: req.body.email }
     User.create(user, (err, user) => {
         if (err) {
             console.log(err);
             res.json({ success: false, message: `Failed to signin. Error: ${err}` });
 
         }
-        
-             else {
-                 console.log("done");
-                res.json({ success: true , user: user});
-            }
+
+        else {
+            console.log("done");
+            res.json({ success: true, user: user });
         }
+    }
 
     );
 
