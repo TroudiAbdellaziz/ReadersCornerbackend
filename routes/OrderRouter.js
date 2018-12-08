@@ -6,13 +6,15 @@ const Book = require('../models/book');
 const User = require('../models/user');
 const Order = require('../models/order')
 router.post('/order', (req, res) => {
-    User.create((req.body), (err, res) => {
+    Order.create((req.body), (err, res) => {
         if (err) {
-            return ({ success: false, message: `Failed to add the order. Error: ${err}` });
+            console.log(err);
+             return ({ success: false, message: `Failed to add the order. Error: ${err}` });
 
         }
         else {
-            return ({ success: true });
+            console.log("doone");
+             return({ success: true });
 
         }
     });
