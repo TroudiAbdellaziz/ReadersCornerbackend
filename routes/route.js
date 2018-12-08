@@ -1,7 +1,7 @@
 //Require the express package and use express.Router()
 const express = require('express');
 const router = express.Router();
-
+var multer = require("multer");
 const Book = require('../models/book');
 const User = require('../models/user');
 //GET HTTP method to /bucketlist
@@ -62,6 +62,40 @@ router.delete('/:id', (req, res, next) => {
     res.send("DELETE");
 
 })
+router.get("/deleteBook/:id",(req,res)=>{
 
+    let id=req.params.id;
+    Book.findById(id,(err,res)=>{
+        if (err) {
+            return ({ success: false, message: `Failed to add the book. Error: ${err}` });
+
+        }
+        else {
+            res.remove();
+            return ({ success: true });
+
+        }
+    })
+})
+router.post("/addBook",multer({ dest: "/home/troudi/project/ReadersCorner/src/assets/images" }).array("uploads", 12), (req, res)=> {
+    console.log("here");
+    console.log(req.files);
+    console.log(req.body);
+    let data = req.body;
+    data["picture"]=req.files.filename;
+        Book.create((data), (err, res) => {
+        if (err) {
+            return ({ success: false, message: `Failed to add the book. Error: ${err}` });
+
+        }
+        else {
+            console.log("here");
+            return ({ success: true });
+
+        }
+    });
+    res.send(req.files);
+
+  });
 
 module.exports = router;

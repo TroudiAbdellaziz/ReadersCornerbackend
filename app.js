@@ -32,6 +32,8 @@ mongoose.connect(config.database);
 const BookRouter = require('./routes/route');
 const UserRouter = require('./routes/UserRouter');
 const CardRouter = require('./routes/CardRouter');
+const OrderRouter = require('./routes/OrderRouter');
 app.use('/books',BookRouter);
 app.use('/user',UserRouter);
 app.use('/cards',CardRouter);
+app.use('/orders',OrderRouter);
