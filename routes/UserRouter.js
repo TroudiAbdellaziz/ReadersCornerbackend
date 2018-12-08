@@ -46,9 +46,9 @@ router.post('/login', (req, res) => {
 });
 router.post('/checkPassAndChange', (req, res) => {
     User.findOne({ password: req.body.password }, { id: req.body.id }, (err, user) => {
-        if (err) {
-            console.log(err);
-            res.json({ status: false, message: `Failed to check password. Error: ${err}` });
+        if (!user) {
+
+            res.json({ status: false, message: `Failed to check password. Error` });
 
         }
 

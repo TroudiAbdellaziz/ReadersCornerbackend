@@ -6,6 +6,9 @@ const Book = require('../models/book');
 const User = require('../models/user');
 const Order = require('../models/order')
 router.post('/order', (req, res) => {
+    User.findById((req.body.user),(err,user)=>{
+        let data=req.body;
+        data["userName"]=user.firstName;
     Order.create((req.body), (err, res) => {
         if (err) {
             console.log(err);
@@ -13,9 +16,20 @@ router.post('/order', (req, res) => {
         }
         else {
             console.log("doone");
-            return ({ success: true });
+            for (var i=0;i<req.body.books;i++){
+                Book.findById((req.body.books[i]),(book)=>{
+                    console.log("here");
+                    book.nbSales++;
+                    book.save()
+                })
+            }
+            return({ success: true });
+
         }
     });
+
+    
+});
 
 });
 router.get('/getOrderById/:id', (req, res) => {

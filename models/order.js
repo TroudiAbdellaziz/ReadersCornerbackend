@@ -7,6 +7,9 @@ const OrderSchema = mongoose.Schema({
     books: [String],
     price: String,
     sent: Boolean,
+    booksNames:[String],
+    userName: String,
+    address: String
 });
 const  Order = module.exports = mongoose.model(' Order',  OrderSchema );
 
