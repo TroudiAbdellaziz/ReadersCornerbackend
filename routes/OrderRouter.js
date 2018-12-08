@@ -9,13 +9,11 @@ router.post('/order', (req, res) => {
     Order.create((req.body), (err, res) => {
         if (err) {
             console.log(err);
-             return ({ success: false, message: `Failed to add the order. Error: ${err}` });
-
+            return ({ success: false, message: `Failed to add the order. Error: ${err}` });
         }
         else {
             console.log("doone");
-             return({ success: true });
-
+            return ({ success: true });
         }
     });
 
@@ -23,7 +21,7 @@ router.post('/order', (req, res) => {
 router.get('/getOrderById/:id', (req, res) => {
     console.log("here");
     var id = req.params.id;
-    Order.findById(id,(err, order) => {
+    Order.findById(id, (err, order) => {
         if (err) {
             res.json({ success: false, message: `Failed to load order. Error: ${err}` });
         }
