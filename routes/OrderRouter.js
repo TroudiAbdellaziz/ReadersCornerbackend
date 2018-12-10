@@ -11,14 +11,11 @@ router.post('/order', (req, res) => {
         data["userName"]=user.firstName;
     Order.create((req.body), (err, res) => {
         if (err) {
-            console.log(err);
             return ({ success: false, message: `Failed to add the order. Error: ${err}` });
         }
         else {
-            console.log("doone");
             for (var i=0;i<req.body.books;i++){
                 Book.findById((req.body.books[i]),(book)=>{
-                    console.log("here");
                     book.nbSales++;
                     book.save()
                 })
@@ -33,14 +30,12 @@ router.post('/order', (req, res) => {
 
 });
 router.get('/getOrderById/:id', (req, res) => {
-    console.log("here");
     var id = req.params.id;
     Order.findById(id, (err, order) => {
         if (err) {
             res.json({ success: false, message: `Failed to load order. Error: ${err}` });
         }
         else {
-            console.log(order);
             res.write(JSON.stringify({ success: true, order: order }, null, 2));
             res.end();
         }

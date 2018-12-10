@@ -1,4 +1,4 @@
-//Require the express package and use express.Router()
+
 const express = require('express');
 const router = express.Router();
 
@@ -19,18 +19,18 @@ router.post('/user', (req, res) => {
 
 });
 router.post('/login', (req, res) => {
-    console.log(req.body);
+
     User.findOne(
         {
             email: req.body.email
         }, (err, user) => {
             if (err) {
-                console.log(err);
-                res.json({ success: false, message: `Technical error.` });
+
+              res.json({ success: false, message: `Technical error.` });
 
             }
             else if (!user) {
-                console.log("not found");
+
                 res.json({ success: false, message: 'user not found' });
             }
             else {
@@ -53,7 +53,7 @@ router.post('/checkPassAndChange', (req, res) => {
         }
 
         else {
-            console.log("done");
+
             user.password = req.body.newpassword;
             user.save();
             res.json({ status: true });
@@ -63,7 +63,7 @@ router.post('/checkPassAndChange', (req, res) => {
     });
 });
 router.post('/signup', (req, res) => {
-    console.log(req.body);
+
     let user = { firstName: req.body.fname, lasname: req.body.lname, password: req.body.password, email: req.body.email }
     User.create(user, (err, user) => {
         if (err) {
@@ -73,7 +73,7 @@ router.post('/signup', (req, res) => {
         }
 
         else {
-            console.log("done");
+
             res.json({ success: true, user: user });
         }
     }
